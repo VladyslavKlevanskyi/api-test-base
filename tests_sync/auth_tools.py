@@ -22,8 +22,8 @@ def get_valid_token(base_url: str, username: str, password: str) -> str:
         Exception: If a valid token could not be obtained.
     """
     token_file = os.getenv("TOKEN_FILE")
-    auth_url = f"{base_url}{os.getenv('AUTH_URL')}"
-    check_url = f"{base_url}{os.getenv('CHECK_URL')}"
+    auth_url = f"{base_url}users/login"
+    check_url = f"{base_url}users/me"
     auth_payload = {"username": username, "password": password}
 
     data = {}  # Dictionary to store 'username': 'token' pairs

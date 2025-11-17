@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import Any
 from httpx import Response, AsyncClient
 
-from tests_async.tools import get_valid_token
+from tests_async.auth_tools import get_valid_token
 
 dotenv.load_dotenv()
 
