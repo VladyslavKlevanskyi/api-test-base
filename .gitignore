@@ -47,3 +47,7 @@ Thumbs.db
 reports/
 test-results/
 allure-results/
+
+# Other
+/token.json
+/main.py
