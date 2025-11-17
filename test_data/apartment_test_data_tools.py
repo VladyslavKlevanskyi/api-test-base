@@ -8,6 +8,7 @@ from reportlab.pdfgen import canvas
 
 fake = Faker()
 
+
 def get_apartment_data() -> dict[str, int | str | bool | list[int]]:
     """
     Generate a randomized dictionary representing apartment data
@@ -64,6 +65,7 @@ def get_few_apartments_data(
         apartments_list.append(apartment)
     return apartments_list
 
+
 def remove_apartment_data(
         key: str
 ) -> dict[str, int | str | bool | float | list[int]]:
@@ -98,6 +100,7 @@ def replace_apartment_data(
     apartment_data = get_apartment_data()
     apartment_data[key] = value
     return apartment_data
+
 
 def prepare_file_upload(
         content: bytes,
@@ -142,6 +145,7 @@ def prepare_file_upload(
 
     return {"file": (test_file_name, file_obj, content_type)}
 
+
 def generate_content(file_format: str) -> bytes:
     """
     Generate file content in various formats (image, PDF, text) for testing
@@ -174,6 +178,7 @@ def generate_content(file_format: str) -> bytes:
         return b"Hello, this is a test .txt file.\nLine 2."
     else:
         raise ValueError(f"Unsupported format: .{file_format}")
+
 
 def all_fields_test_params(all_lists: list) -> list:
     result_list = []

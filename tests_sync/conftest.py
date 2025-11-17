@@ -30,7 +30,6 @@ from tests_sync.endpoints.user_retrieve import RetrieveUser
 from tests_sync.endpoints.user_retrieve_all import RetrieveAllUsers
 
 
-
 @pytest.fixture
 def home_page_endpoint() -> HomePage:
     """

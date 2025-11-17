@@ -271,7 +271,7 @@ tour_field_valid_test_data = [
 
 # =================INVALID TEST DATA=======================
 
-unit_id_field_invalid_test_data =[
+unit_id_field_invalid_test_data = [
     (
         "Send None to the 'unit_id' field",
         {"unit_id": None},
@@ -308,7 +308,7 @@ unit_id_field_invalid_test_data =[
         ("unit_id", MESSAGES["unit_id_val_err"])
     ),
 ]
-unit_type_field_invalid_test_data =[
+unit_type_field_invalid_test_data = [
     (
         "Send bool to the 'unit_type' field",
         {"unit_type": True},
@@ -691,11 +691,9 @@ images_field_invalid_test_data = [
     (
         "Send string with space to one of the array values to the "
         "'images' field",
-        {
-            "images": [
+        {"images": [
             "https://google.ca/", "String space", "https://chrome.ca/"
-        ]
-        },
+        ]},
         ("images", MESSAGES["images_val_err_URL"])
     ),
     (
@@ -707,11 +705,10 @@ images_field_invalid_test_data = [
         "Send string with 1025 symbols to one of the array values to the "
         "'images' field",
         {"images": [
-                "https://google.ca/",
-                "https://goog.ca/" * 64 + "5",
-                "https://chrome.ca/"
-            ]
-        },
+            "https://google.ca/",
+            "https://goog.ca/" * 64 + "5",
+            "https://chrome.ca/"
+        ]},
         ("images", MESSAGES["images_val_err_max_char"])
     ),
     (

@@ -11,6 +11,7 @@ dotenv.load_dotenv()
 
 BASE_URL = os.getenv("BASE_URL")
 
+
 class Endpoint:
     """
     Base class for API endpoint tests.
@@ -77,7 +78,7 @@ class Endpoint:
             error_message: Optional custom message for failure.
         """
         assert self.response is not None, "Response is None"
-        
+
         if error_message is not None:
             assert self.response.status_code == code, error_message
         else:

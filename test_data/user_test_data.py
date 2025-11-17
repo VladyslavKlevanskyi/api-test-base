@@ -44,5 +44,6 @@ def get_few_random_user_data(
         num += 1
     return user_list
 
+
 VALID_CREDENTIALS = random_valid_user_credentials()
 NEW_VALID_PASS = random_valid_user_credentials()["password"]

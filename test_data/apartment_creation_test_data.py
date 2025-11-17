@@ -274,10 +274,10 @@ images_field_valid_test_data = [
     (
         "Send list of 20 URLs into 'images' field",
         "images",
-        replace_apartment_data(key="images", value=[
-            "https://google.ca/" for _ in range(20)
-        ]
-                               ),
+        replace_apartment_data(
+            key="images",
+            value=["https://google.ca/" for _ in range(20)]
+        ),
         ["https://google.ca/" for _ in range(20)]
     ),
     (
@@ -791,7 +791,11 @@ images_field_invalid_test_data = [
         "'images' field",
         replace_apartment_data(
             key="images",
-            value=["https://google.ca/", "https://chro me.ca/", "https://chrome.ca/"]
+            value=[
+                "https://google.ca/",
+                "https://chro me.ca/",
+                "https://chrome.ca/"
+            ]
         ),
         ("images", MESSAGES["images_val_err_URL"])
     ),
@@ -864,7 +868,10 @@ tour_field_invalid_test_data = [
     ),
     (
         "Send 1025 char into 'tour' field",
-        replace_apartment_data(key="tour", value="https://goog.ca/" * 64 + "5"),
+        replace_apartment_data(
+            key="tour",
+            value="https://goog.ca/" * 64 + "5"
+        ),
         ("tour", MESSAGES["tour_val_err"])
     ),
 ]

@@ -27,7 +27,7 @@ def test_update_apartment_body(
     time_tolerance = 2
 
     create_apartment_endpoint.create_apartment(
-    payload=get_apartment_data()
+        payload=get_apartment_data()
     )
     creation_time = datetime.now(timezone.utc).replace(tzinfo=None).isoformat(
         timespec="seconds"

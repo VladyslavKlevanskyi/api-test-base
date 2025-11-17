@@ -1,0 +1,12 @@
+[flake8]
+inline-quotes = "
+ignore = ANN101
+
+exclude =
+    .venv\,
+    alembic\versions,
+    .git,
+    .mypy_cache,
+    .pytest_cache,
+    __pycache__,
+    TEST.py

@@ -2,23 +2,20 @@ import pytest
 from typing import Any
 
 from test_data.apartment_test_data import (
-    ONE_FIELD_FILTRATION_TEST_PARAMS,
-    FEW_FIELD_FILTRATION_TEST_PARAMS
+    ONE_FIELD_FILTRATION_PARAMS,
+    FEW_FIELD_FILTRATION_PARAMS
 )
 from tests_sync.endpoints.apartment_filter import FilterApartments
 from test_data.headers_test_data import INVALID_HEADERS
-
 
 
 @pytest.mark.positive
 @pytest.mark.parametrize(
     argnames="field, value, expected_count",
     argvalues=[
-        (
-                data[1], data[2], data[3]
-        ) for data in ONE_FIELD_FILTRATION_TEST_PARAMS
+        (data[1], data[2], data[3]) for data in ONE_FIELD_FILTRATION_PARAMS
     ],
-    ids=[title[0] for title in ONE_FIELD_FILTRATION_TEST_PARAMS]
+    ids=[title[0] for title in ONE_FIELD_FILTRATION_PARAMS]
 )
 def test_filter_apartments_by_one_field(
         create_few_specific_apartments: list,
@@ -39,9 +36,9 @@ def test_filter_apartments_by_one_field(
 @pytest.mark.parametrize(
     argnames="payload, expected_count",
     argvalues=[
-        (data[1], data[2]) for data in FEW_FIELD_FILTRATION_TEST_PARAMS
+        (data[1], data[2]) for data in FEW_FIELD_FILTRATION_PARAMS
     ],
-    ids=[title[0] for title in FEW_FIELD_FILTRATION_TEST_PARAMS]
+    ids=[title[0] for title in FEW_FIELD_FILTRATION_PARAMS]
 )
 def test_filter_apartments_by_few_fields(
         create_few_specific_apartments: list,

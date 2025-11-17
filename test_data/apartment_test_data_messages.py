@@ -17,8 +17,8 @@ MESSAGES = {
                     "(int or float)",
     "price_val_err": "Value error, price must be a positive integer if "
                      "provided",
-    "description_val_err": "Value error, description must be a non-empty string"
-                           " (max 255 characters) containing only Latin"
+    "description_val_err": "Value error, description must be a non-empty"
+                           " string (max 255 characters) containing only Latin"
                            " letters, digits, spaces, and the following"
                            " symbols: '.', ',', '\"', \"'\", '(', ')', '!',"
                            " '/', '?', '&', '%', ':', or '-'",
