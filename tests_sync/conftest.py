@@ -17,9 +17,8 @@ from tests_sync.endpoints.apartment_delete import DeleteApartment
 from tests_sync.endpoints.apartment_filter import FilterApartments
 from tests_sync.endpoints.apartment_update import UpdateApartment
 from tests_sync.endpoints.apartment_retreive import RetrieveApartment
-from tests_sync.endpoints.apartment_retreive_all import (
-    RetrieveAllApartments
-)
+from tests_sync.endpoints.apartment_retreive_all import RetrieveAllApartments
+from tests_sync.endpoints.apartment_upload_plan import UploadApartmentPlan
 
 from test_data.user_test_parameters import VALID_USER_DATA_LIST
 from tests_sync.endpoints.user_create import CreateUser
@@ -170,6 +169,18 @@ def create_two_apartments_for_duplicate_test(
     )
     delete_apartment_endpoint.delete_apartment_by_id(first_apartment_id)
     delete_apartment_endpoint.delete_apartment_by_id(second_apartment_id)
+
+
+@pytest.fixture
+def upload_plan_endpoint() -> UploadApartmentPlan:
+    """
+    Fixture that provides access to the apartment plan upload endpoint.
+
+    Returns:
+        UploadApartmentPlan: Helper class for uploading floor plan images
+        for a given apartment.
+    """
+    return UploadApartmentPlan()
 
 
 @pytest.fixture(autouse=True)

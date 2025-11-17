@@ -21,7 +21,7 @@ from tests_async.endpoints.apartment_filter import FilterApartments
 from tests_async.endpoints.apartment_update import UpdateApartment
 from tests_async.endpoints.apartment_retreive import RetrieveApartment
 from tests_async.endpoints.apartment_retreive_all import RetrieveAllApartments
-# from tests_async.endpoints.apartment_upload_plan import UploadApartmentPlan
+from tests_async.endpoints.apartment_upload_plan import UploadApartmentPlan
 
 from tests_async.endpoints.user_create import CreateUser
 from tests_async.endpoints.user_delete import DeleteUser
@@ -221,19 +221,19 @@ async def cleanup_apartment(
             )
 
 
-# @pytest_asyncio.fixture
-# async def upload_plan_endpoint(
-#         async_client: AsyncClient
-# ) -> UploadApartmentPlan:
-#     """
-#     Fixture that provides access to the apartment plan upload endpoint.
-#
-#     Returns:
-#         UploadApartmentPlan: Helper class for uploading floor plan images
-#         for a given apartment.
-#     """
-#     return UploadApartmentPlan(async_client)
-#
+@pytest_asyncio.fixture
+async def upload_plan_endpoint(
+        async_client: AsyncClient
+) -> UploadApartmentPlan:
+    """
+    Fixture that provides access to the apartment plan upload endpoint.
+
+    Returns:
+        UploadApartmentPlan: Helper class for uploading floor plan images
+        for a given apartment.
+    """
+    return UploadApartmentPlan(async_client)
+
 
 # ------------------- User Fixtures -------------------
 

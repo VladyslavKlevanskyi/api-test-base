@@ -42,3 +42,4 @@ class CreateApartment(Endpoint):
         # Save the apartment ID if creation succeeded
         if self.response.status_code == 201:
             self.apartment_id = self.body["id"]
+            self.unit_id = self.body["unit_id"]
