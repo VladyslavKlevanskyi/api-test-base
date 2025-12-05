@@ -74,6 +74,6 @@ def test_filter_apartments_with_invalid_headers(
 
     # Assertions
     filter_apartment_endpoint.check_that_status_is(401)
-    filter_apartment_endpoint.check_user_response_body_is_correct(
+    filter_apartment_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )

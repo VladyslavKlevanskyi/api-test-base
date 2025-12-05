@@ -57,7 +57,7 @@ def test_delete_apartment_with_invalid_headers(
 
     # Assertions
     delete_apartment_endpoint.check_that_status_is(401)
-    delete_apartment_endpoint.check_user_response_body_is_correct(
+    delete_apartment_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )
 

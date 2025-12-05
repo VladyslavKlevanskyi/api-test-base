@@ -31,4 +31,4 @@ def test_me_endpoint_with_invalid_data(
 ) -> None:
     me_endpoint.open_me(headers=headers)
     me_endpoint.check_that_status_is(401)
-    me_endpoint.check_user_response_body_is_correct(expected_message=message)
+    me_endpoint.check_error_response_body_is_correct(expected_message=message)

@@ -47,6 +47,7 @@ Thumbs.db
 reports/
 test-results/
 allure-results/
+allure-report/
 
 # Other
 /token.json

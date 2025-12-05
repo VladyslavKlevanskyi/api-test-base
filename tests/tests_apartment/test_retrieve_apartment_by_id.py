@@ -112,7 +112,7 @@ def test_retrieve_apartment_by_id_with_invalid_headers(
 
     # Assertions
     retrieve_apartment_endpoint.check_that_status_is(401)
-    retrieve_apartment_endpoint.check_user_response_body_is_correct(
+    retrieve_apartment_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )
 

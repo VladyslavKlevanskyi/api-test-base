@@ -52,7 +52,7 @@ def test_delete_user_with_invalid_headers(
     delete_user_endpoint.delete_user_by_id(user_id=user_id, headers=headers)
     # Assertions
     delete_user_endpoint.check_that_status_is(401)
-    delete_user_endpoint.check_user_response_body_is_correct(
+    delete_user_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )
 
@@ -79,6 +79,6 @@ def test_delete_user_without_admin_rights(
 
     # Assertions
     delete_user_endpoint.check_that_status_is(403)
-    delete_user_endpoint.check_user_response_body_is_correct(
+    delete_user_endpoint.check_error_response_body_is_correct(
         expected_message=HEADERS_MESSAGES["no_permissions"]
     )

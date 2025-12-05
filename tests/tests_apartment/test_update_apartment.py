@@ -201,7 +201,7 @@ def test_update_apartment_with_duplicate_unit_id_fails(
 
     # Assertions
     update_apartment_endpoint.check_that_status_is(400)
-    update_apartment_endpoint.check_user_response_body_is_correct(
+    update_apartment_endpoint.check_error_response_body_is_correct(
         expected_message=MESSAGES["apartment_is_exist"]
     )
 
@@ -233,6 +233,6 @@ def test_update_apartment_with_invalid_headers(
     )
     # Assertions
     update_apartment_endpoint.check_that_status_is(401)
-    update_apartment_endpoint.check_user_response_body_is_correct(
+    update_apartment_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )

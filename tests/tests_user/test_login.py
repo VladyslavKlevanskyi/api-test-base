@@ -51,6 +51,6 @@ def test_login_with_invalid_data(
     login_endpoint.login(payload)
     # Assertions
     login_endpoint.check_that_status_is(status_code)
-    login_endpoint.check_user_response_body_is_correct(
+    login_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )

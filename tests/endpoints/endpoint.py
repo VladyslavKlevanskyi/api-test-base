@@ -1,4 +1,5 @@
 import os
+import allure
 import dotenv
 
 from datetime import datetime
@@ -79,13 +80,14 @@ class Endpoint:
         """
         assert self.response is not None, "Response is None"
 
-        if error_message is not None:
-            assert self.response.status_code == code, error_message
-        else:
-            assert self.response.status_code == code, (
-                f"Expected status code: {code}, "
-                f"Actual status code: {self.response.status_code}"
-            )
+        with allure.step(f"Check if response status code is {code}"):
+            if error_message is not None:
+                assert self.response.status_code == code, error_message
+            else:
+                assert self.response.status_code == code, (
+                    f"Expected status code: {code}, "
+                    f"Actual status code: {self.response.status_code}"
+                )
 
     def check_that_field_type_is(
             self,
@@ -101,18 +103,20 @@ class Endpoint:
         """
         assert self.body is not None, "Response body is None"
 
-        assert field in self.body, (
-            f"Field '{field}' not found in response. "
-            f"Available fields: {list(self.body.keys())}"
-        )
+        with allure.step(f"Check if {field} field is in response body"):
+            assert field in self.body, (
+                f"Field '{field}' not found in response. "
+                f"Available fields: {list(self.body.keys())}"
+            )
 
-        actual_value = self.body.get(field)
-        assert isinstance(actual_value, expected_type), (
-            f"Expected field '{field}' "
-            f"to be of type '{expected_type.__name__}'"
-            f", but got '{type(actual_value).__name__}' "
-            f"with value '{actual_value}'"
-        )
+        with allure.step(f"Check if {field} field type is in response body"):
+            actual_value = self.body.get(field)
+            assert isinstance(actual_value, expected_type), (
+                f"Expected field '{field}' "
+                f"to be of type '{expected_type.__name__}'"
+                f", but got '{type(actual_value).__name__}' "
+                f"with value '{actual_value}'"
+            )
 
     def check_that_field_equals(
             self,
@@ -127,11 +131,13 @@ class Endpoint:
             expected_value: Expected value.
         """
         assert self.body is not None, "Response body is None"
-        actual = self.body.get(field)
-        assert actual == expected_value, (
-            f"Expected field '{field}' to be '{expected_value}',"
-            f" but got '{actual}'"
-        )
+
+        with allure.step(f"Check if {field} field equals '{expected_value}'"):
+            actual = self.body.get(field)
+            assert actual == expected_value, (
+                f"Expected field '{field}' to be '{expected_value}',"
+                f" but got '{actual}'"
+            )
 
     def check_create_and_update_fields(
             self,
@@ -156,11 +162,12 @@ class Endpoint:
             str(actual).replace("Z", "+00:00")
         )
         time_difference = abs((actual_dt - expected_dt).total_seconds())
-        assert time_difference <= time_tolerance, (
-            f"Expected '{field}' to be within {time_tolerance}sec of"
-            f" '{expected_dt}', but got '{actual_dt}'"
-            f" (difference: {time_difference:.2f}sec)"
-        )
+        with allure.step(f"Check {field} field time"):
+            assert time_difference <= time_tolerance, (
+                f"Expected '{field}' to be within {time_tolerance}sec of"
+                f" '{expected_dt}', but got '{actual_dt}'"
+                f" (difference: {time_difference:.2f}sec)"
+            )
 
     def check_apartment_not_found_message(
             self,
@@ -201,7 +208,7 @@ class Endpoint:
             (f"Expected message: {expected_message},"
              f" Actual message: {actual_message}")
 
-    def check_user_response_body_is_correct(
+    def check_error_response_body_is_correct(
             self, expected_message: str
     ) -> None:
         """
@@ -212,22 +219,23 @@ class Endpoint:
         Args:
             expected_message: Expected error message.
         """
-        assert self.response is not None, "Response is None"
-        assert self.body is not None, "Response body is None"
+        with allure.step(f"Check if error response body is correct."):
+            assert self.response is not None, "Response is None"
+            assert self.body is not None, "Response body is None"
 
-        if self.response.status_code == 422:
-            actual_message = self.body["detail"][0]["msg"]
-        elif self.response.status_code in (400, 401, 403):
-            actual_message = self.body["detail"]
-        else:
-            raise AssertionError(
-                f"Unexpected status code: {self.response.status_code}"
+            if self.response.status_code == 422:
+                actual_message = self.body["detail"][0]["msg"]
+            elif self.response.status_code in (400, 401, 403):
+                actual_message = self.body["detail"]
+            else:
+                raise AssertionError(
+                    f"Unexpected status code: {self.response.status_code}"
+                )
+
+            assert expected_message == actual_message, (
+                f"Expected message: {expected_message},"
+                f" Actual message: {actual_message}"
             )
-
-        assert expected_message == actual_message, (
-            f"Expected message: {expected_message},"
-            f" Actual message: {actual_message}"
-        )
 
     def check_field_validation_error_response(
             self, expected_error: tuple[str, str]
@@ -246,12 +254,14 @@ class Endpoint:
         response_msg = detail["msg"]
         expected_field_name, expected_msg = expected_error
 
-        assert response_field_name == expected_field_name, (
-            f"Expected field name: {expected_field_name}. "
-            f"Actual field name: {response_field_name}"
-        )
+        with allure.step(f"Check expected field name"):
+            assert response_field_name == expected_field_name, (
+                f"Expected field name: {expected_field_name}. "
+                f"Actual field name: {response_field_name}"
+            )
 
-        assert response_msg == expected_msg, (
-            f"Expected message: {expected_msg}. "
-            f"Actual message: {response_msg}"
-        )
+        with allure.step(f"Check expected message"):
+            assert response_msg == expected_msg, (
+                f"Expected message: {expected_msg}. "
+                f"Actual message: {response_msg}"
+            )

@@ -69,7 +69,7 @@ def test_create_user_with_invalid_data(
     register_user_endpoint.register_new_user(payload=user_data)
     # Assertions
     register_user_endpoint.check_that_status_is(status_code)
-    register_user_endpoint.check_user_response_body_is_correct(
+    register_user_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )
 
@@ -92,7 +92,7 @@ def test_create_user_with_invalid_headers(
     )
     # Assertions
     register_user_endpoint.check_that_status_is(401)
-    register_user_endpoint.check_user_response_body_is_correct(
+    register_user_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )
 
@@ -114,7 +114,7 @@ def test_create_user_without_admin_rights(
     )
     # Assertions
     register_user_endpoint.check_that_status_is(403)
-    register_user_endpoint.check_user_response_body_is_correct(
+    register_user_endpoint.check_error_response_body_is_correct(
         expected_message=HEADERS_MESSAGES["no_permissions"]
     )
 
@@ -127,6 +127,6 @@ def test_create_user_with_already_existing_username(
     register_user_endpoint.register_new_user(payload=VALID_CREDENTIALS)
     # Assertions
     register_user_endpoint.check_that_status_is(400)
-    register_user_endpoint.check_user_response_body_is_correct(
+    register_user_endpoint.check_error_response_body_is_correct(
         expected_message=USER_MASSAGES["username_is_exist"]
     )

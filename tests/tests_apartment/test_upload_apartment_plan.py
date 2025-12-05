@@ -95,7 +95,7 @@ def test_upload_plan_with_invalid_file_format(
 
     # Assert
     upload_plan_endpoint.check_that_status_is(400)
-    upload_plan_endpoint.check_user_response_body_is_correct(
+    upload_plan_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )
 
@@ -129,7 +129,7 @@ def test_retrieve_apartment_by_id_with_invalid_headers(
 
     # Assertions
     upload_plan_endpoint.check_that_status_is(401)
-    upload_plan_endpoint.check_user_response_body_is_correct(
+    upload_plan_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )
 

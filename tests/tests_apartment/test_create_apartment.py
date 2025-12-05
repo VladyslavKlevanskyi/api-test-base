@@ -1,3 +1,4 @@
+import allure
 import pytest
 from typing import Any
 from datetime import datetime, timezone
@@ -13,7 +14,7 @@ from test_data.apartment_test_data import (
     FIELD_VALIDATION_INVALID_TEST_PARAMS,
 )
 
-
+@allure.story("Positive")
 @pytest.mark.smoke
 @pytest.mark.positive
 @pytest.mark.parametrize("apartment_data", APARTMENTS_DATA)
@@ -87,6 +88,7 @@ def test_create_apartment(
     )
 
 
+@allure.story("Positive")
 @pytest.mark.positive
 @pytest.mark.parametrize(
     argnames="field, apartment_data, expected_value",
@@ -112,8 +114,9 @@ def test_create_apartment_field_validation_with_valid_data(
     )
 
 
+@allure.story("Positive")
 @pytest.mark.positive
-def test_create_apartment_created_and_updated_at_fields(
+def test_create_apartment_created_at_and_updated_at_fields(
         create_apartment_endpoint: CreateApartment,
 ) -> None:
     time_tolerance = 2  # acceptable time difference
@@ -135,6 +138,8 @@ def test_create_apartment_created_and_updated_at_fields(
     )
 
 
+
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="apartment_data, expected_error",
@@ -143,7 +148,7 @@ def test_create_apartment_created_and_updated_at_fields(
     ],
     ids=[title[0] for title in FIELD_VALIDATION_INVALID_TEST_PARAMS]
 )
-def test_create_apartment_field_validation_with_invalid_data(
+def test_create_apartment_with_invalid_data(
         create_apartment_endpoint: CreateApartment,
         apartment_data: dict[str, Any],
         expected_error: tuple[str, str]
@@ -156,6 +161,7 @@ def test_create_apartment_field_validation_with_invalid_data(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 def test_create_apartment_with_duplicate_unit_id_fails(
         create_apartment_endpoint: CreateApartment,
@@ -166,11 +172,12 @@ def test_create_apartment_with_duplicate_unit_id_fails(
     create_apartment_endpoint.create_apartment(payload=new_data)
     # Assertions
     create_apartment_endpoint.check_that_status_is(400)
-    create_apartment_endpoint.check_user_response_body_is_correct(
+    create_apartment_endpoint.check_error_response_body_is_correct(
         expected_message=MESSAGES["apartment_is_exist"]
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="headers, message",
@@ -188,6 +195,6 @@ def test_create_apartment_with_invalid_headers(
     )
     # Assertions
     create_apartment_endpoint.check_that_status_is(401)
-    create_apartment_endpoint.check_user_response_body_is_correct(
+    create_apartment_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )

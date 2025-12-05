@@ -40,6 +40,6 @@ def test_get_all_apartments_with_invalid_headers(
 
     # Assertions
     retrieve_apartments_endpoint.check_that_status_is(401)
-    retrieve_apartments_endpoint.check_user_response_body_is_correct(
+    retrieve_apartments_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )

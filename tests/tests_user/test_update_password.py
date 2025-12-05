@@ -96,7 +96,7 @@ def test_update_user_password_with_invalid_data(
     )
     # Assertions
     update_user_password_endpoint.check_that_status_is(status_code)
-    update_user_password_endpoint.check_user_response_body_is_correct(
+    update_user_password_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )
     # check that password was NOT updated
@@ -151,7 +151,7 @@ def test_update_user_password_with_invalid_headers(
     )
     # Assertions
     update_user_password_endpoint.check_that_status_is(401)
-    update_user_password_endpoint.check_user_response_body_is_correct(
+    update_user_password_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )
     # check that password was NOT updated
@@ -191,7 +191,7 @@ def test_update_user_password_without_admin_rights(
     )
     # Assertions
     update_user_password_endpoint.check_that_status_is(403)
-    update_user_password_endpoint.check_user_response_body_is_correct(
+    update_user_password_endpoint.check_error_response_body_is_correct(
         expected_message=HEADERS_MESSAGES["no_permissions"]
     )
     # check that password was NOT updated

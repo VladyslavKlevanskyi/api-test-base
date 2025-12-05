@@ -1,3 +1,4 @@
+import allure
 import requests
 from typing import Any
 
@@ -29,15 +30,15 @@ class CreateApartment(Endpoint):
         if headers is None:
             headers = self.headers
 
-        # Send POST request to create a new apartment
-        self.response = requests.post(
-            url=self.url_apartments,
-            json=payload,
-            headers=headers
-        )
+        with allure.step("Send POST request to create a new apartment"):
+            self.response = requests.post(
+                url=self.url_apartments,
+                json=payload,
+                headers=headers
+            )
 
-        # Parse JSON body from the response
-        self.body = self.response.json()
+        with allure.step("Parse JSON body from the response"):
+            self.body = self.response.json()
 
         # Save the apartment ID if creation succeeded
         if self.response.status_code == 201:
