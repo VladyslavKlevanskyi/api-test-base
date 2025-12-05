@@ -8,6 +8,7 @@ from test_data.apartment_test_data import APARTMENTS_NUMBER
 from test_data.headers_test_data import INVALID_HEADERS
 
 
+@pytest.mark.smoke
 @pytest.mark.positive
 def test_get_all_apartments(
         create_few_apartments: int,

@@ -12,6 +12,7 @@ from test_data.user_test_data import (
 )
 
 
+@pytest.mark.smoke
 @pytest.mark.positive
 def test_delete_user(
         register_user_endpoint: CreateUser,

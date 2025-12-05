@@ -16,6 +16,7 @@ from test_data.apartment_test_data import (
 )
 
 
+@pytest.mark.smoke
 @pytest.mark.positive
 @pytest.mark.parametrize("payload", APARTMENTS_DATA)
 def test_update_apartment_body(

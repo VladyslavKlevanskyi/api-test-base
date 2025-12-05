@@ -10,6 +10,7 @@ from test_data.user_test_data import (
 )
 
 
+@pytest.mark.smoke
 @pytest.mark.positive
 def test_login(login_endpoint: Login) -> None:
     login_endpoint.login(

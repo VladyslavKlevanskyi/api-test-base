@@ -9,6 +9,7 @@ from test_data.user_test_data import (
 )
 
 
+@pytest.mark.smoke
 @pytest.mark.positive
 def test_retrieve_all_users(
         create_few_users: list,

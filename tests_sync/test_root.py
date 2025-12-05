@@ -1,6 +1,8 @@
+import pytest
 from tests_sync.endpoints.root import HomePage
 
 
+@pytest.mark.smoke
 def test_home_page_status_code_and_message(
         home_page_endpoint: HomePage
 ) -> None:

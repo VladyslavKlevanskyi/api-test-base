@@ -15,6 +15,7 @@ def test_me_endpoint(me_endpoint: Me) -> None:
     me_endpoint.check_that_field_type_is(field="is_admin", expected_type=bool)
 
 
+@pytest.mark.smoke
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="headers, message",

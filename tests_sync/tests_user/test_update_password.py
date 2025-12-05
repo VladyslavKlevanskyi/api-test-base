@@ -18,6 +18,7 @@ from test_data.user_test_parameters import (
 )
 
 
+@pytest.mark.smoke
 @pytest.mark.positive
 @pytest.mark.parametrize(
     argnames="new_password",

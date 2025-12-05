@@ -12,6 +12,7 @@ from test_data.user_test_data import (
 )
 
 
+@pytest.mark.smoke
 @pytest.mark.positive
 @pytest.mark.parametrize(
     argnames="user_data",

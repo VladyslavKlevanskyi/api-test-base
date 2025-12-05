@@ -7,6 +7,7 @@ from test_data.apartment_test_data import APARTMENT_DATA
 from test_data.headers_test_data import INVALID_HEADERS
 
 
+@pytest.mark.smoke
 @pytest.mark.positive
 def test_delete_apartment(
         create_apartment_endpoint: CreateApartment,

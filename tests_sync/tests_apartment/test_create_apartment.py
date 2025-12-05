@@ -14,6 +14,7 @@ from test_data.apartment_test_data import (
 )
 
 
+@pytest.mark.smoke
 @pytest.mark.positive
 @pytest.mark.parametrize("apartment_data", APARTMENTS_DATA)
 def test_create_apartment(

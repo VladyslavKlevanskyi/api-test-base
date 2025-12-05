@@ -134,6 +134,7 @@ def test_retrieve_apartment_by_id_with_invalid_headers(
     )
 
 
+@pytest.mark.smoke
 @pytest.mark.negative
 def test_retrieve_apartment_by_incorrect_unit_id(
         upload_plan_endpoint: UploadApartmentPlan,
