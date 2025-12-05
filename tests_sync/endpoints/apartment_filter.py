@@ -31,7 +31,7 @@ class FilterApartments(Endpoint):
 
         # Send POST request to /apartments/filter/
         self.response = requests.post(
-            url=f"{self.url_apartments}/filter/",
+            url=f"{self.url_apartments}/filter",
             json=payload,
             headers=headers
         )
