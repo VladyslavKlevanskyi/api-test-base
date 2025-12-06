@@ -219,7 +219,7 @@ class Endpoint:
         Args:
             expected_message: Expected error message.
         """
-        with allure.step(f"Check if error response body is correct."):
+        with allure.step("Check if error response body is correct."):
             assert self.response is not None, "Response is None"
             assert self.body is not None, "Response body is None"
 
@@ -254,13 +254,13 @@ class Endpoint:
         response_msg = detail["msg"]
         expected_field_name, expected_msg = expected_error
 
-        with allure.step(f"Check expected field name"):
+        with allure.step("Check expected field name"):
             assert response_field_name == expected_field_name, (
                 f"Expected field name: {expected_field_name}. "
                 f"Actual field name: {response_field_name}"
             )
 
-        with allure.step(f"Check expected message"):
+        with allure.step("Check expected message"):
             assert response_msg == expected_msg, (
                 f"Expected message: {expected_msg}. "
                 f"Actual message: {response_msg}"

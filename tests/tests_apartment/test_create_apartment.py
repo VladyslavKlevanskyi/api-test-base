@@ -14,6 +14,7 @@ from test_data.apartment_test_data import (
     FIELD_VALIDATION_INVALID_TEST_PARAMS,
 )
 
+
 @allure.story("Positive")
 @pytest.mark.smoke
 @pytest.mark.positive
@@ -136,7 +137,6 @@ def test_create_apartment_created_at_and_updated_at_fields(
         field="updated_at",
         expected_value=time_now
     )
-
 
 
 @allure.story("Negative")
