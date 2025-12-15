@@ -37,8 +37,7 @@ class CreateApartment(Endpoint):
                 headers=headers
             )
 
-        with allure.step("Parse JSON body from the response"):
-            self.body = self.response.json()
+        self.body = self.response.json()
 
         # Save the apartment ID if creation succeeded
         if self.response.status_code == 201:
