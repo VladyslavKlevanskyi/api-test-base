@@ -181,16 +181,17 @@ class Endpoint:
             value: Value that was searched for (e.g. ID).
             searching_field: Field used for the search (default: "ID").
         """
-        assert self.body is not None, "Response body is None"
+        with allure.step("Check if apartment not found message is correct"):
+            assert self.body is not None, "Response body is None"
 
-        expected_message = (
-            f"Apartment with {searching_field} {value} not found."
-        )
-        actual_message = self.body["detail"]
-        assert expected_message == actual_message, (
-            f"Expected message: {expected_message},"
-            f" Actual message: {actual_message}"
-        )
+            expected_message = (
+                f"Apartment with {searching_field} {value} not found."
+            )
+            actual_message = self.body["detail"]
+            assert expected_message == actual_message, (
+                f"Expected message: {expected_message},"
+                f" Actual message: {actual_message}"
+            )
 
     def check_user_not_found_message(
             self, user_id: int

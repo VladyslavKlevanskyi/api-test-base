@@ -1,3 +1,4 @@
+import allure
 import requests
 
 from tests.endpoints.endpoint import Endpoint
@@ -28,11 +29,11 @@ class DeleteApartment(Endpoint):
         if headers is None:
             headers = self.headers
 
-        # Send DELETE request to /apartments/{id}
-        self.response = requests.delete(
-            url=f"{self.url_apartments}/{apartment_id}",
-            headers=headers
-        )
+        with allure.step("Send DELETE request to /apartments/{id}"):
+            self.response = requests.delete(
+                url=f"{self.url_apartments}/{apartment_id}",
+                headers=headers
+            )
 
         # Parse JSON response body
         self.body = self.response.json()
@@ -47,14 +48,15 @@ class DeleteApartment(Endpoint):
         Args:
             apartment_id: ID of the apartment that was deleted.
         """
-        assert self.body is not None, "Response body is None"
+        with allure.step("Check if delete response message is correct."):
+            assert self.body is not None, "Response body is None"
 
-        expected_message = (
-            f"Apartment with ID {apartment_id} has been deleted."
-        )
-        actual_message = self.body["message"]
+            expected_message = (
+                f"Apartment with ID {apartment_id} has been deleted."
+            )
+            actual_message = self.body["message"]
 
-        assert expected_message == actual_message, (
-            f"Expected message: {expected_message},"
-            f" Actual message: {actual_message}"
-        )
+            assert expected_message == actual_message, (
+                f"Expected message: {expected_message},"
+                f" Actual message: {actual_message}"
+            )

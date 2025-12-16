@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from tests.endpoints.apartment_retreive import RetrieveApartment
@@ -7,6 +8,7 @@ from test_data.apartment_test_data import APARTMENT_DATA
 from test_data.headers_test_data import INVALID_HEADERS
 
 
+@allure.story("Positive")
 @pytest.mark.smoke
 @pytest.mark.positive
 def test_delete_apartment(
@@ -22,19 +24,20 @@ def test_delete_apartment(
     delete_apartment_endpoint.check_delete_response_message_is_correct(
         apartment_id
     )
-    # Check if apartment was deleted from DB
-    retrieve_apartment_endpoint.retrieve_apartment_by_id(
-        apartment_id=apartment_id
-    )
-    # Assertions
-    retrieve_apartment_endpoint.check_that_status_is(
-        error_message=(
-            "Retrieve apartment with deleted ID. Returned status code:"
-        ),
-        code=404
-    )
+    with allure.step("Check if apartment was deleted from DB"):
+        retrieve_apartment_endpoint.retrieve_apartment_by_id(
+            apartment_id=apartment_id
+        )
+        # Assertions
+        retrieve_apartment_endpoint.check_that_status_is(
+            error_message=(
+                "Retrieve apartment with deleted ID. Returned status code:"
+            ),
+            code=404
+        )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="headers, message",
@@ -62,6 +65,7 @@ def test_delete_apartment_with_invalid_headers(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 def test_delete_apartment_by_incorrect_id(
         delete_apartment_endpoint: DeleteApartment
