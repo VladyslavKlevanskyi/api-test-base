@@ -1,3 +1,4 @@
+import allure
 import requests
 
 from tests.endpoints.endpoint import Endpoint
@@ -28,14 +29,14 @@ class RetrieveApartment(Endpoint):
         if headers is None:
             headers = self.headers
 
-        # Send GET request to retrieve the apartment by ID
-        self.response = requests.get(
-            url=f"{self.url_apartments}/{apartment_id}",
-            headers=headers
-        )
+        with allure.step("Send GET request to retrieve the apartment by ID"):
+            self.response = requests.get(
+                url=f"{self.url_apartments}/{apartment_id}",
+                headers=headers
+            )
 
-        # Parse JSON body from the response
-        self.body = self.response.json()
+            # Parse JSON body from the response
+            self.body = self.response.json()
 
     def retrieve_apartment_by_unit_id(
             self,
@@ -54,11 +55,13 @@ class RetrieveApartment(Endpoint):
         if headers is None:
             headers = self.headers
 
-        # Send GET request to retrieve the apartment by unit_id
-        self.response = requests.get(
-            url=f"{self.url_apartments}/unit/{unit_id}",
-            headers=headers
-        )
+        with allure.step(
+                "Send GET request to retrieve the apartment by unit_id"
+        ):
+            self.response = requests.get(
+                url=f"{self.url_apartments}/unit/{unit_id}",
+                headers=headers
+            )
 
-        # Parse JSON body from the response
-        self.body = self.response.json()
+            # Parse JSON body from the response
+            self.body = self.response.json()

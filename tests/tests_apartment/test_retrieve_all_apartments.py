@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from tests.endpoints.apartment_create import CreateApartment
@@ -8,6 +9,7 @@ from test_data.apartment_test_data import APARTMENTS_NUMBER
 from test_data.headers_test_data import INVALID_HEADERS
 
 
+@allure.story("Positive")
 @pytest.mark.smoke
 @pytest.mark.positive
 def test_get_all_apartments(
@@ -22,6 +24,7 @@ def test_get_all_apartments(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="headers, message",

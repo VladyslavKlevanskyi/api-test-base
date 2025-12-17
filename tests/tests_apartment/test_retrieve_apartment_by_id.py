@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from typing import Any
@@ -8,6 +9,7 @@ from test_data.apartment_test_data import APARTMENTS_DATA, APARTMENT_DATA
 from test_data.headers_test_data import INVALID_HEADERS
 
 
+@allure.story("Positive")
 @pytest.mark.smoke
 @pytest.mark.positive
 @pytest.mark.parametrize("apartment_data", APARTMENTS_DATA)
@@ -90,6 +92,7 @@ def test_retrieve_apartment_by_id(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="headers, message",
@@ -117,6 +120,7 @@ def test_retrieve_apartment_by_id_with_invalid_headers(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 def test_retrieve_apartment_by_incorrect_id(
         retrieve_apartment_endpoint: RetrieveApartment
