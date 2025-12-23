@@ -1,3 +1,4 @@
+import allure
 import pytest
 from typing import Any
 
@@ -9,6 +10,7 @@ from tests.endpoints.apartment_filter import FilterApartments
 from test_data.headers_test_data import INVALID_HEADERS
 
 
+@allure.story("Positive")
 @pytest.mark.positive
 @pytest.mark.parametrize(
     argnames="field, value, expected_count",
@@ -32,6 +34,7 @@ def test_filter_apartments_by_one_field(
     filter_apartment_endpoint.check_apartment_count(count=expected_count)
 
 
+@allure.story("Positive")
 @pytest.mark.positive
 @pytest.mark.parametrize(
     argnames="payload, expected_count",
@@ -54,6 +57,7 @@ def test_filter_apartments_by_few_fields(
     filter_apartment_endpoint.check_apartment_count(count=expected_count)
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="headers, message",
