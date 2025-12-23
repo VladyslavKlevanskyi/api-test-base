@@ -1,3 +1,4 @@
+import allure
 import pytest
 from typing import Any
 
@@ -15,6 +16,7 @@ from test_data.apartment_upload_test_data import (
 from test_data.headers_test_data import INVALID_HEADERS
 
 
+@allure.story("Positive")
 @pytest.mark.positive
 @pytest.mark.parametrize(
     argnames="apartment_data, file_format, extension",
@@ -57,6 +59,7 @@ def test_upload_plan(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="apartment_data, file_format, extension, message",
@@ -100,6 +103,7 @@ def test_upload_plan_with_invalid_file_format(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="headers, message",
@@ -134,6 +138,7 @@ def test_retrieve_apartment_by_id_with_invalid_headers(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.smoke
 @pytest.mark.negative
 def test_retrieve_apartment_by_incorrect_unit_id(

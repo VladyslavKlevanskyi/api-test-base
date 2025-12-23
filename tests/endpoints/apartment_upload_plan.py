@@ -1,3 +1,4 @@
+import allure
 import requests
 from typing import Any
 
@@ -6,7 +7,7 @@ from tests.endpoints.endpoint import Endpoint
 
 class UploadApartmentPlan(Endpoint):
     """
-    Async endpoint test helper for uploading apartment plan images.
+    Endpoint test helper for uploading apartment plan images.
 
     Provides methods to upload a floor plan image for a specific apartment,
     validate that the uploaded file is saved and accessible, and clean up
@@ -36,12 +37,12 @@ class UploadApartmentPlan(Endpoint):
         if headers is None:
             headers = self.headers
 
-        # Send the PATCH request with multipart file
-        self.response = requests.patch(
-            url=f"{self.url_apartments}/upload-plan/{unit_id}",
-            files=file,
-            headers=headers
-        )
+        with allure.step("Send the PATCH request with multipart file"):
+            self.response = requests.patch(
+                url=f"{self.url_apartments}/upload-plan/{unit_id}",
+                files=file,
+                headers=headers
+            )
 
         # Parse and store JSON response body
         self.body = self.response.json()
@@ -76,10 +77,10 @@ class UploadApartmentPlan(Endpoint):
         Args:
             extension: File extension (e.g., "jpg", "png").
         """
+        with allure.step("Check plan_image field content"):
+            filename = self._generate_plan_image_file_name(self.body, extension)
 
-        filename = self._generate_plan_image_file_name(self.body, extension)
-
-        assert self.body["plan_image"] == f"/apartment/plans/{filename}"
+            assert self.body["plan_image"] == f"/apartment/plans/{filename}"
 
     def check_file_availability_by_link(
             self,
@@ -91,11 +92,11 @@ class UploadApartmentPlan(Endpoint):
         Args:
             expected_content: The expected binary content of the uploaded file.
         """
+        with allure.step("Check file availability by link"):
+            response = requests.get(
+                url=self.url_root + self.body["plan_image"],
+            )
 
-        response = requests.get(
-            url=self.url_root + self.body["plan_image"],
-        )
-
-        assert response.content == expected_content, (
-            "The file content does not match what was expected"
-        )
+            assert response.content == expected_content, (
+                "The file content does not match what was expected"
+            )
