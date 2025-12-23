@@ -78,7 +78,10 @@ class UploadApartmentPlan(Endpoint):
             extension: File extension (e.g., "jpg", "png").
         """
         with allure.step("Check plan_image field content"):
-            filename = self._generate_plan_image_file_name(self.body, extension)
+            filename = self._generate_plan_image_file_name(
+                self.body,
+                extension
+            )
 
             assert self.body["plan_image"] == f"/apartment/plans/{filename}"
 
