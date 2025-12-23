@@ -1,6 +1,7 @@
-from typing import Any
-
+import allure
 import requests
+
+from typing import Any
 
 from tests.endpoints.endpoint import Endpoint
 
@@ -35,12 +36,12 @@ class UpdateApartment(Endpoint):
         if headers is None:
             headers = self.headers
 
-        # Send PATCH request to update an existing apartment
-        self.response = requests.patch(
-            url=f"{self.url_apartments}/{apartment_id}",
-            json=payload,
-            headers=headers
-        )
+        with allure.step("Send PATCH request to update an existing apartment"):
+            self.response = requests.patch(
+                url=f"{self.url_apartments}/{apartment_id}",
+                json=payload,
+                headers=headers
+            )
 
         # Parse response JSON body
         self.body = self.response.json()
@@ -63,9 +64,9 @@ class UpdateApartment(Endpoint):
         # Remove the updated field from rest_fields before checking
         rest_fields.pop(updated_field)
 
-        # Check that all other fields match expected values
-        for field, value in rest_fields.items():
-            assert self.body[field] == value, (
-                f"Expected field value: {value}. "
-                f"Actual field value: {self.body[field]}"
-            )
+        with allure.step("Check that all other fields match expected values"):
+            for field, value in rest_fields.items():
+                assert self.body[field] == value, (
+                    f"Expected field value: {value}. "
+                    f"Actual field value: {self.body[field]}"
+                )

@@ -109,7 +109,7 @@ class Endpoint:
                 f"Available fields: {list(self.body.keys())}"
             )
 
-        with allure.step(f"Check if {field} field type is in response body"):
+        with allure.step(f"Check if {field} field type is {expected_type}"):
             actual_value = self.body.get(field)
             assert isinstance(actual_value, expected_type), (
                 f"Expected field '{field}' "

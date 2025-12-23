@@ -1,3 +1,4 @@
+import allure
 import pytest
 from time import sleep
 from datetime import datetime, timezone
@@ -16,6 +17,7 @@ from test_data.apartment_test_data import (
 )
 
 
+@allure.story("Positive")
 @pytest.mark.smoke
 @pytest.mark.positive
 @pytest.mark.parametrize("payload", APARTMENTS_DATA)
@@ -115,6 +117,7 @@ def test_update_apartment_body(
     )
 
 
+@allure.story("Positive")
 @pytest.mark.positive
 @pytest.mark.parametrize(
     argnames="field, value, expected_value",
@@ -152,6 +155,7 @@ def test_update_one_field_in_apartment_with_valid_data(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="payload, expected_error",
@@ -183,6 +187,7 @@ def test_update_one_field_in_apartment_with_invalid_data(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 def test_update_apartment_with_duplicate_unit_id_fails(
         create_two_apartments_for_duplicate_test: tuple,
@@ -206,6 +211,7 @@ def test_update_apartment_with_duplicate_unit_id_fails(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="headers, message",
