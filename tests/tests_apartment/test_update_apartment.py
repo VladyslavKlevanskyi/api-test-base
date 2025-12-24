@@ -182,7 +182,7 @@ def test_update_one_field_in_apartment_with_invalid_data(
     )
     # Assertions
     update_apartment_endpoint.check_that_status_is(422)
-    update_apartment_endpoint.check_field_validation_error_response(
+    update_apartment_endpoint.check_field_error_response_and_validate_massage(
         expected_error
     )
 

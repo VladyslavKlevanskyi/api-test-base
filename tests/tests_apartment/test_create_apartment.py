@@ -156,7 +156,7 @@ def test_create_apartment_with_invalid_data(
     create_apartment_endpoint.create_apartment(payload=apartment_data)
     # Assertions
     create_apartment_endpoint.check_that_status_is(422)
-    create_apartment_endpoint.check_field_validation_error_response(
+    create_apartment_endpoint.check_field_error_response_and_validate_massage(
         expected_error
     )
 

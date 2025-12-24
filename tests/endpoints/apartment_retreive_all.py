@@ -12,6 +12,7 @@ class RetrieveAllApartments(Endpoint):
     and a method to validate the number of apartments returned.
     """
 
+    @allure.step("Send GET request to retrieve all apartments")
     def retrieve_all_apartments(
             self,
             headers: dict[str, str] | None = None
@@ -27,15 +28,16 @@ class RetrieveAllApartments(Endpoint):
         if headers is None:
             headers = self.headers
 
-        with allure.step("Send GET request to retrieve all apartments"):
-            self.response = requests.get(
-                url=self.url_apartments,
-                headers=headers
-            )
+        # Send GET request to retrieve all apartments
+        self.response = requests.get(
+            url=self.url_apartments,
+            headers=headers
+        )
 
-            # Parse JSON body from the response
-            self.body = self.response.json()
+        # Parse JSON body from the response
+        self.body = self.response.json()
 
+    @allure.step("Check retrieved apartments count")
     def check_retrieved_apartments_count(self, apartments_number: int) -> None:
         """
         Assert that the number of apartments returned matches the expected
@@ -45,11 +47,10 @@ class RetrieveAllApartments(Endpoint):
             apartments_number: The expected number of apartments in the
                                response.
         """
-        with allure.step("Check retrieved apartments count"):
-            assert self.body is not None, "Response body is None"
+        assert self.body is not None, "Response body is None"
 
-            apartments_in_response = len(self.body)
-            assert apartments_in_response == apartments_number, (
-                f"Expected {apartments_number} objects, "
-                f"but received {apartments_in_response}"
-            )
+        apartments_in_response = len(self.body)
+        assert apartments_in_response == apartments_number, (
+            f"Expected {apartments_number} objects, "
+            f"but received {apartments_in_response}"
+        )

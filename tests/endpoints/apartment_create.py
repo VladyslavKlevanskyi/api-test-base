@@ -13,6 +13,7 @@ class CreateApartment(Endpoint):
     and stores the response and parsed body.
     """
 
+    @allure.step("Send POST request to create a new apartment")
     def create_apartment(
             self,
             payload: dict[str, Any],
@@ -30,12 +31,12 @@ class CreateApartment(Endpoint):
         if headers is None:
             headers = self.headers
 
-        with allure.step("Send POST request to create a new apartment"):
-            self.response = requests.post(
-                url=self.url_apartments,
-                json=payload,
-                headers=headers
-            )
+        # Send POST request to create a new apartment
+        self.response = requests.post(
+            url=self.url_apartments,
+            json=payload,
+            headers=headers
+        )
 
         self.body = self.response.json()
 

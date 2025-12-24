@@ -12,6 +12,7 @@ class RetrieveApartment(Endpoint):
     or by the unit ID, and stores the response and parsed body.
     """
 
+    @allure.step("Send GET request to retrieve the apartment by ID")
     def retrieve_apartment_by_id(
             self,
             apartment_id: int,
@@ -29,15 +30,16 @@ class RetrieveApartment(Endpoint):
         if headers is None:
             headers = self.headers
 
-        with allure.step("Send GET request to retrieve the apartment by ID"):
-            self.response = requests.get(
-                url=f"{self.url_apartments}/{apartment_id}",
-                headers=headers
-            )
+        # Send GET request to retrieve the apartment by ID
+        self.response = requests.get(
+            url=f"{self.url_apartments}/{apartment_id}",
+            headers=headers
+        )
 
-            # Parse JSON body from the response
-            self.body = self.response.json()
+        # Parse JSON body from the response
+        self.body = self.response.json()
 
+    @allure.step("Send GET request to retrieve the apartment by unit_id")
     def retrieve_apartment_by_unit_id(
             self,
             unit_id: int,
@@ -55,13 +57,11 @@ class RetrieveApartment(Endpoint):
         if headers is None:
             headers = self.headers
 
-        with allure.step(
-                "Send GET request to retrieve the apartment by unit_id"
-        ):
-            self.response = requests.get(
-                url=f"{self.url_apartments}/unit/{unit_id}",
-                headers=headers
-            )
+        # Send GET request to retrieve the apartment by unit_id
+        self.response = requests.get(
+            url=f"{self.url_apartments}/unit/{unit_id}",
+            headers=headers
+        )
 
-            # Parse JSON body from the response
-            self.body = self.response.json()
+        # Parse JSON body from the response
+        self.body = self.response.json()

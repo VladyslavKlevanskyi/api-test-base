@@ -13,6 +13,7 @@ class FilterApartments(Endpoint):
     and validate the count of returned results.
     """
 
+    @allure.step("Send POST request to /apartments/filter/")
     def retrieve_apartments_by_field_value(
             self,
             payload: dict[str, Any],
@@ -30,16 +31,17 @@ class FilterApartments(Endpoint):
         if headers is None:
             headers = self.headers
 
-        with allure.step("Send POST request to /apartments/filter/"):
-            self.response = requests.post(
-                url=f"{self.url_apartments}/filter",
-                json=payload,
-                headers=headers
-            )
+        # Send POST request to /apartments/filter/
+        self.response = requests.post(
+            url=f"{self.url_apartments}/filter",
+            json=payload,
+            headers=headers
+        )
 
         # Parse JSON response body
         self.body = self.response.json()
 
+    @allure.step("Check that retrieved apartment count is {count}")
     def check_apartment_count(self, count: int) -> None:
         """
         Assert that the number of returned apartments matches the expected
@@ -51,8 +53,7 @@ class FilterApartments(Endpoint):
         assert self.body is not None, "Response body is None"
 
         apartments_in_response = len(self.body)
-        with allure.step(f"Check that retrieved apartment count is {count}"):
-            assert apartments_in_response == count, (
-                f"Expected {count} objects, but"
-                f" received {apartments_in_response}"
-            )
+        assert apartments_in_response == count, (
+            f"Expected {count} objects, but"
+            f" received {apartments_in_response}"
+        )

@@ -12,6 +12,7 @@ class DeleteApartment(Endpoint):
     correctness of the deletion response.
     """
 
+    @allure.step("Send DELETE request to /apartments/id")
     def delete_apartment_by_id(
             self,
             apartment_id: int,
@@ -29,15 +30,16 @@ class DeleteApartment(Endpoint):
         if headers is None:
             headers = self.headers
 
-        with allure.step("Send DELETE request to /apartments/{id}"):
-            self.response = requests.delete(
-                url=f"{self.url_apartments}/{apartment_id}",
-                headers=headers
-            )
+        # Send DELETE request to /apartments/{id}
+        self.response = requests.delete(
+            url=f"{self.url_apartments}/{apartment_id}",
+            headers=headers
+        )
 
         # Parse JSON response body
         self.body = self.response.json()
 
+    @allure.step("Check if delete response message is correct")
     def check_delete_response_message_is_correct(
             self,
             apartment_id: int
@@ -48,15 +50,14 @@ class DeleteApartment(Endpoint):
         Args:
             apartment_id: ID of the apartment that was deleted.
         """
-        with allure.step("Check if delete response message is correct."):
-            assert self.body is not None, "Response body is None"
+        assert self.body is not None, "Response body is None"
 
-            expected_message = (
-                f"Apartment with ID {apartment_id} has been deleted."
-            )
-            actual_message = self.body["message"]
+        expected_message = (
+            f"Apartment with ID {apartment_id} has been deleted."
+        )
+        actual_message = self.body["message"]
 
-            assert expected_message == actual_message, (
-                f"Expected message: {expected_message},"
-                f" Actual message: {actual_message}"
-            )
+        assert expected_message == actual_message, (
+            f"Expected message: {expected_message},"
+            f" Actual message: {actual_message}"
+        )

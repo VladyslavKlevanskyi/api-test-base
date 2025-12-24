@@ -14,6 +14,7 @@ class UpdateApartment(Endpoint):
     and a method to verify that all fields except one remain unchanged.
     """
 
+    @allure.step("Send PATCH request to update an existing apartment")
     def update_apartment(
             self,
             apartment_id: int,
@@ -36,18 +37,18 @@ class UpdateApartment(Endpoint):
         if headers is None:
             headers = self.headers
 
-        with allure.step("Send PATCH request to update an existing apartment"):
-            self.response = requests.patch(
-                url=f"{self.url_apartments}/{apartment_id}",
-                json=payload,
-                headers=headers
-            )
+        self.response = requests.patch(
+            url=f"{self.url_apartments}/{apartment_id}",
+            json=payload,
+            headers=headers
+        )
 
         # Parse response JSON body
         self.body = self.response.json()
 
         return self.body
 
+    @allure.step("Check that all fields except one remain unchanged")
     def check_all_fields_except_one_remain_unchanged(
             self,
             updated_field: str,
@@ -64,9 +65,9 @@ class UpdateApartment(Endpoint):
         # Remove the updated field from rest_fields before checking
         rest_fields.pop(updated_field)
 
-        with allure.step("Check that all other fields match expected values"):
-            for field, value in rest_fields.items():
-                assert self.body[field] == value, (
-                    f"Expected field value: {value}. "
-                    f"Actual field value: {self.body[field]}"
-                )
+        # Check that all other fields match expected values
+        for field, value in rest_fields.items():
+            assert self.body[field] == value, (
+                f"Expected field value: {value}. "
+                f"Actual field value: {self.body[field]}"
+            )

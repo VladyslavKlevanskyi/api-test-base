@@ -66,6 +66,7 @@ class Endpoint:
 
         return headers
 
+    @allure.step("Check if response status code is {code}")
     def check_that_status_is(
             self,
             code: int,
@@ -80,15 +81,15 @@ class Endpoint:
         """
         assert self.response is not None, "Response is None"
 
-        with allure.step(f"Check if response status code is {code}"):
-            if error_message is not None:
-                assert self.response.status_code == code, error_message
-            else:
-                assert self.response.status_code == code, (
-                    f"Expected status code: {code}, "
-                    f"Actual status code: {self.response.status_code}"
-                )
+        if error_message is not None:
+            assert self.response.status_code == code, error_message
+        else:
+            assert self.response.status_code == code, (
+                f"Expected status code: {code}, "
+                f"Actual status code: {self.response.status_code}"
+            )
 
+    @allure.step("Check '{field}' field type")
     def check_that_field_type_is(
             self,
             field: str,
@@ -118,6 +119,7 @@ class Endpoint:
                 f"with value '{actual_value}'"
             )
 
+    @allure.step("Check if {field} field equals expected value")
     def check_that_field_equals(
             self,
             field: str,
@@ -132,13 +134,13 @@ class Endpoint:
         """
         assert self.body is not None, "Response body is None"
 
-        with allure.step(f"Check if {field} field equals '{expected_value}'"):
-            actual = self.body.get(field)
-            assert actual == expected_value, (
-                f"Expected field '{field}' to be '{expected_value}',"
-                f" but got '{actual}'"
-            )
+        actual = self.body.get(field)
+        assert actual == expected_value, (
+            f"Expected field '{field}' to be '{expected_value}',"
+            f" but got '{actual}'"
+        )
 
+    @allure.step("Check '{field}' field time")
     def check_create_and_update_fields(
             self,
             time_tolerance: int,
@@ -162,13 +164,13 @@ class Endpoint:
             str(actual).replace("Z", "+00:00")
         )
         time_difference = abs((actual_dt - expected_dt).total_seconds())
-        with allure.step(f"Check {field} field time"):
-            assert time_difference <= time_tolerance, (
-                f"Expected '{field}' to be within {time_tolerance}sec of"
-                f" '{expected_dt}', but got '{actual_dt}'"
-                f" (difference: {time_difference:.2f}sec)"
-            )
+        assert time_difference <= time_tolerance, (
+            f"Expected '{field}' to be within {time_tolerance}sec of"
+            f" '{expected_dt}', but got '{actual_dt}'"
+            f" (difference: {time_difference:.2f}sec)"
+        )
 
+    @allure.step("Check if apartment not found message is correct")
     def check_apartment_not_found_message(
             self,
             value: int,
@@ -181,17 +183,16 @@ class Endpoint:
             value: Value that was searched for (e.g. ID).
             searching_field: Field used for the search (default: "ID").
         """
-        with allure.step("Check if apartment not found message is correct"):
-            assert self.body is not None, "Response body is None"
+        assert self.body is not None, "Response body is None"
 
-            expected_message = (
-                f"Apartment with {searching_field} {value} not found."
-            )
-            actual_message = self.body["detail"]
-            assert expected_message == actual_message, (
-                f"Expected message: {expected_message},"
-                f" Actual message: {actual_message}"
-            )
+        expected_message = (
+            f"Apartment with {searching_field} {value} not found."
+        )
+        actual_message = self.body["detail"]
+        assert expected_message == actual_message, (
+            f"Expected message: {expected_message},"
+            f" Actual message: {actual_message}"
+        )
 
     def check_user_not_found_message(
             self, user_id: int
@@ -209,6 +210,7 @@ class Endpoint:
             (f"Expected message: {expected_message},"
              f" Actual message: {actual_message}")
 
+    @allure.step("Check if error response body is correct")
     def check_error_response_body_is_correct(
             self, expected_message: str
     ) -> None:
@@ -220,25 +222,25 @@ class Endpoint:
         Args:
             expected_message: Expected error message.
         """
-        with allure.step("Check if error response body is correct."):
-            assert self.response is not None, "Response is None"
-            assert self.body is not None, "Response body is None"
+        assert self.response is not None, "Response is None"
+        assert self.body is not None, "Response body is None"
 
-            if self.response.status_code == 422:
-                actual_message = self.body["detail"][0]["msg"]
-            elif self.response.status_code in (400, 401, 403):
-                actual_message = self.body["detail"]
-            else:
-                raise AssertionError(
-                    f"Unexpected status code: {self.response.status_code}"
-                )
-
-            assert expected_message == actual_message, (
-                f"Expected message: {expected_message},"
-                f" Actual message: {actual_message}"
+        if self.response.status_code == 422:
+            actual_message = self.body["detail"][0]["msg"]
+        elif self.response.status_code in (400, 401, 403):
+            actual_message = self.body["detail"]
+        else:
+            raise AssertionError(
+                f"Unexpected status code: {self.response.status_code}"
             )
 
-    def check_field_validation_error_response(
+        assert expected_message == actual_message, (
+            f"Expected message: {expected_message},"
+            f" Actual message: {actual_message}"
+        )
+
+    @allure.step("Check field error response and validate massage")
+    def check_field_error_response_and_validate_massage(
             self, expected_error: tuple[str, str]
     ) -> None:
         """
