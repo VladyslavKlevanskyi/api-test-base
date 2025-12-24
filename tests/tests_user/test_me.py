@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from typing import Dict
@@ -6,6 +7,8 @@ from tests.endpoints.user_me import Me
 from test_data.user_test_parameters import INVALID_AUTHORIZATION_TESTS_PARAM
 
 
+@allure.story("Positive")
+@pytest.mark.smoke
 @pytest.mark.positive
 def test_me_endpoint(me_endpoint: Me) -> None:
     me_endpoint.open_me()
@@ -15,6 +18,7 @@ def test_me_endpoint(me_endpoint: Me) -> None:
     me_endpoint.check_that_field_type_is(field="is_admin", expected_type=bool)
 
 
+@allure.story("Negative")
 @pytest.mark.smoke
 @pytest.mark.negative
 @pytest.mark.parametrize(

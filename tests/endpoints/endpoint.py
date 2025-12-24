@@ -104,7 +104,7 @@ class Endpoint:
         """
         assert self.body is not None, "Response body is None"
 
-        with allure.step(f"Check if {field} field is in response body"):
+        with allure.step(f"Check if '{field}' field is in response body"):
             assert field in self.body, (
                 f"Field '{field}' not found in response. "
                 f"Available fields: {list(self.body.keys())}"
@@ -194,6 +194,7 @@ class Endpoint:
             f" Actual message: {actual_message}"
         )
 
+    @allure.step("Check if user not found message is correct")
     def check_user_not_found_message(
             self, user_id: int
     ) -> None:

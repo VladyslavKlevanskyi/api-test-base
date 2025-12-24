@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from tests.endpoints.user_login import Login
@@ -9,6 +10,7 @@ from test_data.user_test_data import (
 )
 
 
+@allure.story("Positive")
 @pytest.mark.smoke
 @pytest.mark.positive
 def test_retrieve_all_users(
@@ -24,6 +26,7 @@ def test_retrieve_all_users(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="headers, message",
@@ -47,6 +50,7 @@ def test_retrieve_all_users_with_invalid_headers(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 def test_retrieve_all_users_without_admin_rights(
         create_few_users: list,

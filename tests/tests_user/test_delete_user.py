@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from tests.endpoints.user_retrieve import RetrieveUser
@@ -12,6 +13,7 @@ from test_data.user_test_data import (
 )
 
 
+@allure.story("Positive")
 @pytest.mark.smoke
 @pytest.mark.positive
 def test_delete_user(
@@ -25,15 +27,18 @@ def test_delete_user(
     # Assertions
     delete_user_endpoint.check_that_status_is(200)
     delete_user_endpoint.check_delete_response_message_is_correct(user_id)
-    # Check if user was deleted from DB
-    retrieve_user_endpoint.retrieve_user_by_id(user_id=user_id)
-    # Assertions
-    retrieve_user_endpoint.check_that_status_is(
-        error_message="Retrieve user with deleted ID. Returned status code:",
-        code=404
-    )
+    with allure.step("Check if user was deleted from DB"):
+        retrieve_user_endpoint.retrieve_user_by_id(user_id=user_id)
+        # Assertions
+        retrieve_user_endpoint.check_that_status_is(
+            error_message=(
+                "Retrieve user with deleted ID. Returned status code:"
+            ),
+            code=404
+        )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="headers, message",
@@ -57,6 +62,7 @@ def test_delete_user_with_invalid_headers(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 def test_delete_user_without_admin_rights(
         login_endpoint: Login,

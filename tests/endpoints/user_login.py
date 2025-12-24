@@ -1,3 +1,4 @@
+import allure
 import requests
 from typing import Any
 
@@ -12,6 +13,7 @@ class Login(Endpoint):
     response.
     """
 
+    @allure.step("Send POST request to the login endpoint")
     def login(self, payload: dict[str, Any]) -> None:
         """
         Send a POST request to /users/login to authenticate a user.

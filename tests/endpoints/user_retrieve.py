@@ -1,3 +1,4 @@
+import allure
 import requests
 
 from tests.endpoints.endpoint import Endpoint
@@ -11,6 +12,7 @@ class RetrieveUser(Endpoint):
     a method for making authenticated requests to retrieve specific user data.
     """
 
+    @allure.step("Send GET request to retrieve the user by id")
     def retrieve_user_by_id(
             self,
             user_id: int,

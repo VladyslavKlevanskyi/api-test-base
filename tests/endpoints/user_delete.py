@@ -1,3 +1,4 @@
+import allure
 import requests
 
 from tests.endpoints.endpoint import Endpoint
@@ -11,6 +12,7 @@ class DeleteUser(Endpoint):
     Inherits common functionality from the base Endpoint class.
     """
 
+    @allure.step("Send DELETE request to /users/id")
     def delete_user_by_id(
             self,
             user_id: int,
@@ -41,6 +43,7 @@ class DeleteUser(Endpoint):
         # Parse and store the JSON response
         self.body = self.response.json()
 
+    @allure.step("Check if delete response message is correct")
     def check_delete_response_message_is_correct(
             self, user_id: int
     ) -> None:

@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from typing import Dict
@@ -10,6 +11,7 @@ from test_data.user_test_data import (
 )
 
 
+@allure.story("Positive")
 @pytest.mark.smoke
 @pytest.mark.positive
 def test_login(login_endpoint: Login) -> None:
@@ -34,6 +36,7 @@ def test_login(login_endpoint: Login) -> None:
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="payload, message, status_code",

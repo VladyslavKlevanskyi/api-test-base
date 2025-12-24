@@ -1,3 +1,4 @@
+import allure
 import requests
 
 from tests.endpoints.endpoint import Endpoint
@@ -11,6 +12,8 @@ class Me(Endpoint):
     Inherits common functionality from the base Endpoint class and
     provides a method to retrieve authenticated user details.
     """
+
+    @allure.step("Send GET request to the /users/me endpoint")
     def open_me(self, headers: dict[str, str] | None = None) -> None:
         """
         Send a GET request to /users/me to retrieve the current user's data.

@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from typing import Any
@@ -6,6 +7,7 @@ from tests.endpoints.user_create import CreateUser
 from tests.endpoints.user_login import Login
 from tests.endpoints.user_password import UpdateUserPass
 from test_data.headers_test_data import INVALID_HEADERS, HEADERS_MESSAGES
+from test_data.user_test_data_messages import USER_MASSAGES
 from test_data.user_test_data import (
     VALID_CREDENTIALS,
     TEST_USERNAME,
@@ -18,6 +20,7 @@ from test_data.user_test_parameters import (
 )
 
 
+@allure.story("Positive")
 @pytest.mark.smoke
 @pytest.mark.positive
 @pytest.mark.parametrize(
@@ -58,19 +61,20 @@ def test_update_user_password(
     update_user_password_endpoint.check_that_field_equals(
         field="is_admin", expected_value=False
     )
-    # check that password was updated
-    login_endpoint.login(
-        payload={
-            "username": VALID_CREDENTIALS["username"],
-            "password": new_password
-        }
-    )
-    login_endpoint.check_that_status_is(
-        error_message="Login with new password failed. Returned status code:",
-        code=200
-    )
+    with allure.step("Check if password was updated"):
+        login_endpoint.login(
+            payload={
+                "username": VALID_CREDENTIALS["username"],
+                "password": new_password
+            }
+        )
+        login_endpoint.check_that_status_is(
+            error_message=USER_MASSAGES["pass_error_message"],
+            code=200
+        )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="payload, message, status_code",
@@ -99,19 +103,20 @@ def test_update_user_password_with_invalid_data(
     update_user_password_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )
-    # check that password was NOT updated
-    login_endpoint.login(
-        payload={
-            "username": VALID_CREDENTIALS["username"],
-            "password": payload.get("password")
-        }
-    )
-    login_endpoint.check_that_status_is(
-        error_message="Login with new password. Returned status code:",
-        code=422
-    )
+    with allure.step("Check that password was NOT updated"):
+        login_endpoint.login(
+            payload={
+                "username": VALID_CREDENTIALS["username"],
+                "password": payload.get("password")
+            }
+        )
+        login_endpoint.check_that_status_is(
+            error_message=USER_MASSAGES["pass_error_message"],
+            code=422
+        )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 def test_update_user_password_by_by_incorrect_id(
         update_user_password_endpoint: UpdateUserPass
@@ -126,6 +131,7 @@ def test_update_user_password_by_by_incorrect_id(
     update_user_password_endpoint.check_user_not_found_message(user_id=user_id)
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="headers, message",
@@ -154,19 +160,20 @@ def test_update_user_password_with_invalid_headers(
     update_user_password_endpoint.check_error_response_body_is_correct(
         expected_message=message
     )
-    # check that password was NOT updated
-    login_endpoint.login(
-        payload={
-            "username": VALID_CREDENTIALS["username"],
-            "password": NEW_VALID_PASS
-        }
-    )
-    login_endpoint.check_that_status_is(
-        error_message="Login with password failed. Returned status code:",
-        code=401
-    )
+    with allure.step("Check that password was NOT updated"):
+        login_endpoint.login(
+            payload={
+                "username": VALID_CREDENTIALS["username"],
+                "password": NEW_VALID_PASS
+            }
+        )
+        login_endpoint.check_that_status_is(
+            error_message=USER_MASSAGES["pass_error_message"],
+            code=401
+        )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 def test_update_user_password_without_admin_rights(
         login_endpoint: Login,
@@ -194,14 +201,14 @@ def test_update_user_password_without_admin_rights(
     update_user_password_endpoint.check_error_response_body_is_correct(
         expected_message=HEADERS_MESSAGES["no_permissions"]
     )
-    # check that password was NOT updated
-    login_endpoint.login(
-        payload={
-            "username": VALID_CREDENTIALS["username"],
-            "password": NEW_VALID_PASS
-        }
-    )
-    login_endpoint.check_that_status_is(
-        error_message="Login with password failed. Returned status code:",
-        code=401
-    )
+    with allure.step("Check that password was NOT updated"):
+        login_endpoint.login(
+            payload={
+                "username": VALID_CREDENTIALS["username"],
+                "password": NEW_VALID_PASS
+            }
+        )
+        login_endpoint.check_that_status_is(
+            error_message=USER_MASSAGES["pass_error_message"],
+            code=401
+        )

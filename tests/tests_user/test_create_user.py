@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from typing import Any
@@ -21,6 +22,7 @@ from test_data.user_test_data import (
 )
 
 
+@allure.story("Positive")
 @pytest.mark.smoke
 @pytest.mark.positive
 @pytest.mark.parametrize(
@@ -52,6 +54,7 @@ def test_create_user(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="user_data, message, status_code",
@@ -74,6 +77,7 @@ def test_create_user_with_invalid_data(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="headers, message",
@@ -97,6 +101,7 @@ def test_create_user_with_invalid_headers(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 def test_create_user_without_admin_rights(
         login_endpoint: Login,
@@ -119,6 +124,7 @@ def test_create_user_without_admin_rights(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 def test_create_user_with_already_existing_username(
         register_user_endpoint: CreateUser

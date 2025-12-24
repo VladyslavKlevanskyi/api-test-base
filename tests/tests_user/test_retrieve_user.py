@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from tests.endpoints.user_create import CreateUser
@@ -12,6 +13,7 @@ from test_data.user_test_data import (
 )
 
 
+@allure.story("Positive")
 @pytest.mark.smoke
 @pytest.mark.positive
 @pytest.mark.parametrize(
@@ -49,6 +51,7 @@ def test_retrieve_user_by_id(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 def test_retrieve_user_by_incorrect_id(
         retrieve_user_endpoint: RetrieveUser
@@ -62,6 +65,7 @@ def test_retrieve_user_by_incorrect_id(
     retrieve_user_endpoint.check_user_not_found_message(user_id=user_id)
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 @pytest.mark.parametrize(
     argnames="headers, message",
@@ -89,6 +93,7 @@ def test_retrieve_user_by_id_with_invalid_headers(
     )
 
 
+@allure.story("Negative")
 @pytest.mark.negative
 def test_retrieve_user_by_id_without_admin_rights(
         login_endpoint: Login,

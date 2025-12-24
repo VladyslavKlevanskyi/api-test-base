@@ -1,3 +1,4 @@
+import allure
 import requests
 from typing import Any
 
@@ -12,6 +13,7 @@ class CreateUser(Endpoint):
     to send a user registration request and store the created user ID.
     """
 
+    @allure.step("Send POST request to register a new user")
     def register_new_user(
             self,
             payload: dict[str, Any],

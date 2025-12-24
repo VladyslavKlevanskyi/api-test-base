@@ -1,3 +1,4 @@
+import allure
 import requests
 
 from tests.endpoints.endpoint import Endpoint
@@ -11,6 +12,7 @@ class RetrieveAllUsers(Endpoint):
     the amount returned in response.
     """
 
+    @allure.step("Send GET request to retrieve all users")
     def retrieve_all_users(
             self,
             headers: dict[str, str] | None = None
@@ -40,6 +42,7 @@ class RetrieveAllUsers(Endpoint):
         # Parse and store the JSON response
         self.body = self.response.json()
 
+    @allure.step("Check that retrieved users count not less than created")
     def check_retrieved_users_not_less_than_created(
             self,
             created_users: int

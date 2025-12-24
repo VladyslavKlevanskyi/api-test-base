@@ -1,3 +1,4 @@
+import allure
 import requests
 from typing import Any
 
@@ -13,6 +14,7 @@ class UpdateUserPass(Endpoint):
     to send password update requests.
     """
 
+    @allure.step("Send PATCH request to update the user's password")
     def update_user_password(
             self,
             user_id: int,
