@@ -2,7 +2,7 @@ import os
 import dotenv
 import requests
 
-from tests_sync.auth_tools import get_valid_token
+from tests.auth_tools import get_valid_token
 
 dotenv.load_dotenv()
 

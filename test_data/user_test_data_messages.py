@@ -19,5 +19,6 @@ USER_MASSAGES = {
                   "one digit.",
     "pass_special": "Value error, Password must include at least one special "
                     "character ~!@#$%^&*_-",
-    "username_is_exist": "Username already registered",
+    "pass_error_message": "Login with password failed. Returned status code:",
+    "username_is_exist": "Username already registered"
 }
