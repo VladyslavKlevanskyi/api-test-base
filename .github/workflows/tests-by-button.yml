@@ -1,0 +1,49 @@
+name: Run Python Tests by Button
+
+on:
+  workflow_dispatch:
+    inputs:
+      deployment_target:
+        description: Choose tests set
+        required: true
+        default: smoke
+        type: choice
+        options:
+          - smoke
+          - all
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      BASE_URL: ${{ secrets.BASE_URL }}
+      ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+      TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+      TEST_PASS: ${{ secrets.TEST_PASS }}
+      TOKEN_FILE: ${{ secrets.TOKEN_FILE }}
+      INVALID_TOKEN: ${{ secrets.INVALID_TOKEN }}
+
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v5  # Clones your code into the working environment
+
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.11.5'  # Specify the Python version you are using
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run all tests
+      if: "github.event.inputs.deployment_target == 'all'"
+      run: pytest -sv
+
+    - name: Run smoke tests
+      if: "github.event.inputs.deployment_target == 'smoke'"
+      run: pytest -m smoke -sv

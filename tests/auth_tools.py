@@ -21,7 +21,11 @@ def get_valid_token(base_url: str, username: str, password: str) -> str:
     Raises:
         Exception: If a valid token could not be obtained.
     """
-    token_file = os.getenv("TOKEN_FILE")
+    # Ensure base_url is not None or empty
+    if not base_url:
+        raise Exception("BASE_URL is not set or empty")
+
+    token_file = os.getenv("TOKEN_FILE", "token.json")
     auth_url = f"{base_url}users/login"
     check_url = f"{base_url}users/me"
     auth_payload = {"username": username, "password": password}

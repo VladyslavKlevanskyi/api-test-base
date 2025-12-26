@@ -33,7 +33,7 @@ INVALID_HEADERS = [
     ),
     (
         "Invalid token",
-        {"Authorization": "Bearer " + os.getenv("invalid_token")},
+        {"Authorization": "Bearer " + os.getenv("INVALID_TOKEN")},
         HEADERS_MESSAGES["not_valid_credentials"],
         401
     )
