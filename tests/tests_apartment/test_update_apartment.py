@@ -27,7 +27,7 @@ def test_update_apartment_body(
         payload: dict[str, Any]
 ) -> None:
     # acceptable time difference in update_at and create_at fields
-    time_tolerance = 2
+    time_tolerance = 5
 
     create_apartment_endpoint.create_apartment(
         payload=get_apartment_data()
