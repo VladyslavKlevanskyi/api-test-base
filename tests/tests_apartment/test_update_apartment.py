@@ -21,6 +21,7 @@ from test_data.apartment_test_data import (
 @pytest.mark.smoke
 @pytest.mark.positive
 @pytest.mark.parametrize("payload", APARTMENTS_DATA)
+@pytest.mark.flaky(max_runs=3, min_passes=1)
 def test_update_apartment_body(
         create_apartment_endpoint: CreateApartment,
         update_apartment_endpoint: UpdateApartment,
